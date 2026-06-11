@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mimosa Works — AIで、中小企業のマーケティングを再設計する。</title>
+<meta name="description" content="月1回30分のインタビューで、ブログ・SNS・メルマガを全自動生成。マーケティング担当者不要。Mimosa Works。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:   #111010;
+  --off:     #1c1b1b;
+  --paper:   #faf8f4;
+  --warm:    #f0ece3;
+  --rule:    #e2ddd4;
+  --mid:     #888178;
+  --light:   #c4bfb5;
+  --lime:    #c8e06b;
+  --lime-dk: #a8bf4a;
+  --white:   #ffffff;
+  --serif:   'DM Serif Display', serif;
+  --jp:      'Noto Serif JP', serif;
+  --sans:    'Noto Sans JP', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--black); font-family: var(--sans); font-size: 16px; line-height: 1.75; overflow-x: hidden; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  background: rgba(250,248,244,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.logo {
+  font-family: var(--serif); font-size: 22px;
+  letter-spacing: 0.02em; color: var(--black);
+  text-decoration: none;
+}
+.logo span { color: var(--lime-dk); }
+.nav-r { display: flex; align-items: center; gap: 36px; }
+.nav-r a { font-size: 13px; color: var(--mid); text-decoration: none; font-weight: 500; transition: color .2s; }
+.nav-r a:hover { color: var(--black); }
+.nav-cta {
+  background: var(--black); color: var(--white) !important;
+  padding: 10px 22px; border-radius: 4px;
+  font-size: 13px !important; font-weight: 600 !important;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: var(--lime-dk) !important; color: var(--black) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 64px;
+}
+.hero-l {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px 80px 80px;
+  border-right: 1px solid var(--rule);
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--lime-dk);
+  margin-bottom: 28px;
+}
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 5.5vw, 80px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 36px;
+}
+.hero-h1 em { font-style: italic; color: var(--mid); }
+.hero-body {
+  font-family: var(--jp); font-weight: 300;
+  font-size: 17px; line-height: 1.9;
+  color: var(--mid);
+  max-width: 440px;
+  margin-bottom: 52px;
+}
+.hero-actions { display: flex; gap: 16px; align-items: center; }
+.btn-black {
+  background: var(--black); color: var(--white);
+  padding: 16px 32px; border-radius: 4px;
+  font-size: 15px; font-weight: 600;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: background .2s, transform .15s;
+}
+.btn-black:hover { background: var(--off); transform: translateY(-1px); }
+.btn-text {
+  font-size: 13px; color: var(--mid); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-text:hover { color: var(--black); }
+
+/* Hero right — stats ticker */
+.hero-r {
+  background: var(--black);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 64px;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero-r-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--lime);
+  margin-bottom: 40px;
+  opacity: 0.7;
+}
+.stat-row {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 28px 0;
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px;
+}
+.stat-row:last-of-type { border-bottom: 1px solid rgba(255,255,255,0.08); }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 56px; font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.stat-unit { font-size: 14px; color: var(--lime); margin-left: 6px; }
+.stat-desc { font-size: 13px; color: rgba(255,255,255,0.4); text-align: right; max-width: 180px; line-height: 1.5; }
+.hero-r-note {
+  margin-top: 40px;
+  font-size: 12px; color: rgba(255,255,255,0.25);
+  line-height: 1.7;
+}
+/* decorative grid lines */
+.hero-r::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,224,107,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,224,107,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ── SECTION BASE ── */
+.sec { padding: 120px 80px; }
+.sec-inner { max-width: 1200px; margin: 0 auto; }
+.sec-eye {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--lime-dk);
+  margin-bottom: 20px; display: block;
+}
+.sec-h2 {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4vw, 60px);
+  line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+.sec-lead {
+  font-family: var(--jp); font-weight: 300;
+  font-size: 17px; color: var(--mid); line-height: 1.9;
+  max-width: 560px; margin-bottom: 72px;
+}
+
+/* ── PROBLEM ── */
+.problem-bg { background: var(--warm); }
+.problem-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+}
+.problem-card {
+  background: var(--paper); padding: 44px 36px;
+}
+.p-q {
+  font-family: var(--jp); font-weight: 600;
+  font-size: 17px; line-height: 1.7;
+  margin-bottom: 20px; color: var(--black);
+}
+.p-q::before { content: '「'; color: var(--light); }
+.p-q::after  { content: '」'; color: var(--light); }
+.p-body { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+/* ── HOW ── */
+.how-timeline {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+}
+.how-row {
+  display: grid; grid-template-columns: 120px 1fr 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+.how-row:last-child { border-bottom: none; }
+.how-step {
+  background: var(--black); color: var(--lime);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 32px;
+  padding: 40px 20px;
+  border-right: 1px solid rgba(200,224,107,0.2);
+}
+.how-content {
+  padding: 40px 44px;
+  border-right: 1px solid var(--rule);
+  background: var(--white);
+}
+.how-title {
+  font-family: var(--jp); font-weight: 600;
+  font-size: 20px; margin-bottom: 10px;
+}
+.how-body { font-size: 14px; color: var(--mid); line-height: 1.8; }
+.how-meta {
+  padding: 40px 44px;
+  background: var(--warm);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.how-tool { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+.how-tools-list { font-size: 14px; color: var(--mid); line-height: 1.9; }
+
+/* ── OUTPUT ── */
+.output-bg { background: var(--black); color: var(--white); }
+.output-bg .sec-h2 { color: var(--white); }
+.output-bg .sec-lead { color: rgba(255,255,255,0.4); }
+.output-bg .sec-eye { color: var(--lime); }
+.output-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; overflow: hidden;
+}
+.output-card {
+  background: var(--off);
+  padding: 48px 36px;
+  position: relative; overflow: hidden;
+}
+.output-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--lime);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.output-card:hover::after { transform: scaleX(1); }
+.o-num {
+  font-family: var(--serif); font-size: 72px; font-weight: 400;
+  color: var(--white); letter-spacing: -0.04em; line-height: 1;
+  margin-bottom: 4px;
+}
+.o-unit { font-size: 13px; color: var(--lime); font-weight: 700; margin-bottom: 16px; }
+.o-label { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+}
+.plan {
+  border: 1px solid var(--rule); border-radius: 12px;
+  padding: 44px 36px; background: var(--white);
+  position: relative; transition: box-shadow .2s;
+}
+.plan:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.06); }
+.plan-featured {
+  background: var(--black); border-color: var(--black); color: var(--white);
+}
+.plan-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--lime); color: var(--black);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  padding: 4px 18px; border-radius: 20px; white-space: nowrap;
+}
+.plan-name {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 20px;
+}
+.plan-featured .plan-name { color: rgba(255,255,255,0.4); }
+.plan-price {
+  font-family: var(--serif); font-size: 56px; font-weight: 400;
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px;
+}
+.plan-per { font-size: 13px; color: var(--mid); margin-bottom: 36px; }
+.plan-featured .plan-per { color: rgba(255,255,255,0.4); }
+.plan-divider { border: none; border-top: 1px solid var(--rule); margin: 0 0 28px; }
+.plan-featured .plan-divider { border-color: rgba(255,255,255,0.1); }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+.plan-features li { font-size: 14px; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+.plan-features li::before { content: '—'; color: var(--lime-dk); flex-shrink: 0; font-weight: 700; }
+.plan-featured .plan-features li::before { color: var(--lime); }
+.btn-plan {
+  display: block; text-align: center; padding: 15px 24px;
+  border-radius: 4px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all .2s;
+}
+.btn-plan-dark { background: var(--black); color: var(--white); }
+.btn-plan-dark:hover { background: var(--lime-dk); color: var(--black); }
+.btn-plan-light { background: var(--lime); color: var(--black); }
+.btn-plan-light:hover { background: var(--white); }
+
+/* ── ABOUT ── */
+.about-bg { background: var(--warm); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+.about-num-row { display: flex; gap: 48px; margin-top: 48px; }
+.about-stat .as-n {
+  font-family: var(--serif); font-size: 48px;
+  color: var(--black); letter-spacing: -0.04em; line-height: 1;
+}
+.about-stat .as-l { font-size: 13px; color: var(--mid); margin-top: 4px; }
+.about-r { font-family: var(--jp); font-weight: 300; font-size: 16px; color: var(--mid); line-height: 2; }
+.about-manifesto {
+  font-family: var(--jp); font-weight: 600;
+  font-size: 22px; color: var(--black); line-height: 1.8;
+  margin-bottom: 28px;
+  border-left: 3px solid var(--lime-dk); padding-left: 24px;
+}
+
+/* ── CTA FOOTER ── */
+.cta-sec {
+  background: var(--black); color: var(--white);
+  text-align: center; padding: 140px 80px;
+}
+.cta-sec .sec-eye { color: var(--lime); }
+.cta-sec .sec-h2 { color: var(--white); max-width: 700px; margin: 0 auto 24px; }
+.cta-sec .sec-lead { max-width: 480px; margin: 0 auto 56px; color: rgba(255,255,255,0.4); }
+.btn-lime {
+  background: var(--lime); color: var(--black);
+  padding: 18px 44px; border-radius: 4px;
+  font-size: 16px; font-weight: 700;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  transition: all .2s;
+}
+.btn-lime:hover { background: var(--white); transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--off); color: rgba(255,255,255,0.3);
+  padding: 48px 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px;
+}
+footer .logo { font-size: 18px; color: rgba(255,255,255,0.7); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-l { padding: 80px 32px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero-r { padding: 48px 32px; min-height: 400px; }
+  .sec { padding: 80px 32px; }
+  .problem-grid, .pricing-grid, .output-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .how-row { grid-template-columns: 80px 1fr; }
+  .how-meta { display: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Mimosa<span>.</span>Works</a>
+  <div class="nav-r">
+    <a href="#how">仕組み</a>
+    <a href="#price">料金</a>
+    <a href="#about">私たちについて</a>
+    <a href="#price" class="nav-cta">無料で試す</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <p class="hero-eyebrow">AI Marketing Automation</p>
+    <h1 class="hero-h1">
+      マーケティングを、<br>
+      <em>AIに</em><br>
+      任せる時代。
+    </h1>
+    <p class="hero-body">
+      月1回、30分だけ話してください。<br>
+      あとは私たちのAIが、ブログ・SNS・メルマガを<br>
+      丸ごと1ヶ月分、生成・投稿します。
+    </p>
+    <div class="hero-actions">
+      <a href="#price" class="btn-black">30日間 無料で試す →</a>
+      <a href="#how" class="btn-text">仕組みを見る ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <p class="hero-r-label">Monthly output per client</p>
+
+    <div class="stat-row">
+      <div>
+        <span class="stat-num">20</span>
+        <span class="stat-unit">本</span>
+      </div>
+      <div class="stat-desc">SEO最適化されたブログ記事</div>
+    </div>
+    <div class="stat-row">
+      <div>
+        <span class="stat-num">60</span>
+        <span class="stat-unit">件</span>
+      </div>
+      <div class="stat-desc">X・Instagram・Facebook 投稿</div>
+    </div>
+    <div class="stat-row">
+      <div>
+        <span class="stat-num">4</span>
+        <span class="stat-unit">通</span>
+      </div>
+      <div class="stat-desc">メールマガジン（配信まで自動）</div>
+    </div>
+    <div class="stat-row">
+      <div>
+        <span class="stat-num">30</span>
+        <span class="stat-unit">分</span>
+      </div>
+      <div class="stat-desc">あなたが使う時間（月1回のみ）</div>
+    </div>
+
+    <p class="hero-r-note">
+      ※ 生成AIと自動化ツールの組み合わせにより実現。<br>人間の編集スタッフは不在。代わりに、品質チェックAIが毎回稼働します。
+    </p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec problem-bg">
+  <div class="sec-inner">
+    <span class="sec-eye">The Problem</span>
+    <h2 class="sec-h2">中小企業のマーケティングには、<br>構造的な矛盾がある。</h2>
+    <p class="sec-lead">やらなければいけないと分かっている。でも、時間も人もお金もない。その矛盾を、私たちは解消します。</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <p class="p-q">コンテンツは大事だと分かっているが、書く時間がない</p>
+        <p class="p-body">本業で手一杯の経営者が、毎週ブログを書き続けることは現実的ではありません。結果として「いつかやる」が積み重なる。</p>
+      </div>
+      <div class="problem-card">
+        <p class="p-q">マーケ担当を採用するほどの規模ではない</p>
+        <p class="p-body">マーケティング専任を雇うと月30〜60万円。中小企業にとっては重い投資であり、採用しても成果が出るまでに時間がかかる。</p>
+      </div>
+      <div class="problem-card">
+        <p class="p-q">外注すると高く、クオリティも自社のことを分かっていない</p>
+        <p class="p-body">ライターやSNS代行に依頼すると、業界知識の不足から、表面的なコンテンツになりがち。そのうえコストも月10〜30万円かかる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="sec-inner">
+    <span class="sec-eye">How it works</span>
+    <h2 class="sec-h2">30分のインタビューが、<br>84本のコンテンツになる。</h2>
+    <p class="sec-lead">複雑な設定も、専門知識も不要です。フローは3ステップだけ。</p>
+
+    <div class="how-timeline">
+      <div class="how-row">
+        <div class="how-step">01</div>
+        <div class="how-content">
+          <p class="how-title">インタビューフォームに答える</p>
+          <p class="how-body">毎月1日に専用フォームが届きます。今月の告知・ニュース・お客様に伝えたいことを、自由記述や選択式で回答するだけ。音声入力にも対応。所要時間は30分以内。</p>
+        </div>
+        <div class="how-meta">
+          <p class="how-tool">使用ツール</p>
+          <p class="how-tools-list">Typeform<br>Make.com（連携）</p>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-step">02</div>
+        <div class="how-content">
+          <p class="how-title">AIが全コンテンツを生成・校正</p>
+          <p class="how-body">回答データをもとに、Claude AIがブログ記事・SNS投稿・メルマガを一括生成。品質チェックAIが誤字・矛盾・トーンのズレを自動校正し、管理画面に並べます。</p>
+        </div>
+        <div class="how-meta">
+          <p class="how-tool">使用ツール</p>
+          <p class="how-tools-list">Claude API<br>GPT-4o（校正）<br>Make.com</p>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-step">03</div>
+        <div class="how-content">
+          <p class="how-title">確認して、承認するだけ</p>
+          <p class="how-body">管理画面でコンテンツ一覧を確認。気になる箇所は編集できます。「承認」ボタンを押すと、スケジュールに沿って各プラットフォームへ自動投稿が始まります。</p>
+        </div>
+        <div class="how-meta">
+          <p class="how-tool">使用ツール</p>
+          <p class="how-tools-list">専用管理画面<br>Buffer / Hootsuite<br>WordPress API</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTPUT -->
+<section class="sec output-bg">
+  <div class="sec-inner">
+    <span class="sec-eye">Monthly Output</span>
+    <h2 class="sec-h2">30分が、これだけになる。</h2>
+    <p class="sec-lead">人間のライターチームが1ヶ月かけてやる量を、AIが48時間で仕上げます。</p>
+
+    <div class="output-grid">
+      <div class="output-card">
+        <div class="o-num">20</div>
+        <div class="o-unit">記事 / 月</div>
+        <div class="o-label">SEOキーワード最適化済み<br>ブログ・コラム記事</div>
+      </div>
+      <div class="output-card">
+        <div class="o-num">60</div>
+        <div class="o-unit">投稿 / 月</div>
+        <div class="o-label">X・Instagram・Facebook<br>各20件ずつ自動生成</div>
+      </div>
+      <div class="output-card">
+        <div class="o-num">4</div>
+        <div class="o-unit">通 / 月</div>
+        <div class="o-label">配信設定まで完了した<br>メールマガジン</div>
+      </div>
+      <div class="output-card">
+        <div class="o-num">∞</div>
+        <div class="o-unit">学習</div>
+        <div class="o-label">使うほど御社の<br>言葉・トーンに近づく</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="price">
+  <div class="sec-inner">
+    <span class="sec-eye">Pricing</span>
+    <h2 class="sec-h2">シンプルな料金。<br>いつでも解約できます。</h2>
+    <p class="sec-lead">全プラン、最初の30日間は完全無料。クレジットカード不要です。</p>
+
+    <div class="pricing-grid">
+      <div class="plan">
+        <p class="plan-name">Starter</p>
+        <div class="plan-price">¥30,000</div>
+        <div class="plan-per">/ 月（税別）</div>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li>ブログ記事 10本/月</li>
+          <li>SNS投稿 30件/月</li>
+          <li>メルマガ 2通/月</li>
+          <li>1ブランド</li>
+          <li>メールサポート（48h以内）</li>
+        </ul>
+        <a href="#contact" class="btn-plan btn-plan-dark">30日間 無料で始める</a>
+      </div>
+
+      <div class="plan plan-featured">
+        <div class="plan-badge">MOST POPULAR</div>
+        <p class="plan-name">Growth</p>
+        <div class="plan-price">¥70,000</div>
+        <div class="plan-per">/ 月（税別）</div>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li>ブログ記事 20本/月</li>
+          <li>SNS投稿 60件/月</li>
+          <li>メルマガ 4通/月</li>
+          <li>3ブランドまで</li>
+          <li>自動スケジュール投稿</li>
+          <li>SEOキーワード提案レポート</li>
+          <li>チャットサポート（24h）</li>
+        </ul>
+        <a href="#contact" class="btn-plan btn-plan-light">30日間 無料で始める</a>
+      </div>
+
+      <div class="plan">
+        <p class="plan-name">Enterprise</p>
+        <div class="plan-price">¥150,000</div>
+        <div class="plan-per">/ 月（税別）〜</div>
+        <hr class="plan-divider">
+        <ul class="plan-features">
+          <li>コンテンツ量・ブランド数 無制限</li>
+          <li>専任AIトーン学習（御社専用）</li>
+          <li>CMS・MA ツール直接連携</li>
+          <li>月次効果測定レポート</li>
+          <li>専任担当によるオンボーディング</li>
+        </ul>
+        <a href="#contact" class="btn-plan btn-plan-dark">まずは相談する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec about-bg" id="about">
+  <div class="sec-inner">
+    <div class="about-grid">
+      <div>
+        <span class="sec-eye">About</span>
+        <h2 class="sec-h2">人を雇わない会社が、<br>人のために働く。</h2>
+        <div class="about-num-row">
+          <div class="about-stat">
+            <div class="as-n">92<span style="font-size:20px">%</span></div>
+            <div class="as-l">業務の自動化率</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-n">¥45<span style="font-size:20px">万</span></div>
+            <div class="as-l">月間固定費（全体）</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-n">2<span style="font-size:20px">h</span></div>
+            <div class="as-l">代表の1日の稼働</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-r">
+        <p class="about-manifesto">
+          スタッフは雇いません。<br>
+          でも、手を抜きません。
+        </p>
+        Mimosa Worksは、完全AI運営の個人事業です。<br>
+        営業・制作・請求・サポートまで、すべての業務をAIと自動化ツールで構築しています。<br><br>
+        固定費が低い分、提供できる価値の密度を高くする。<br>
+        人件費に使うはずだったお金を、AIの精度と速度に変える。<br><br>
+        「人がいないから質が低い」は、もう古い考え方だと思っています。<br>
+        2026年のビジネスは、構造で勝負する時代です。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <span class="sec-eye">Get started</span>
+  <h2 class="sec-h2">今月から、コンテンツに<br>時間を使うのをやめましょう。</h2>
+  <p class="sec-lead">30日間完全無料。クレジットカード不要。解約はいつでも1クリックで。</p>
+  <a href="mailto:hello@mimosaworks.jp" class="btn-lime">無料トライアルを申し込む →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">Mimosa<span style="color:var(--lime)">.</span>Works</a>
+  <div>個人事業主 / 代表：AI &nbsp;|&nbsp; hello@mimosaworks.jp &nbsp;|&nbsp; © 2026 Mimosa Works</div>
+</footer>
+
+<script>
+// Subtle scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.problem-card, .how-row, .output-card, .plan, .about-stat').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

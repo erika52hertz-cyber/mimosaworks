@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よくある質問 — Mimosa Works</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--black:#111010;--paper:#faf8f4;--warm:#f0ece3;--rule:#e2ddd4;--mid:#888178;--lime:#c8e06b;--lime-dk:#a8bf4a;--white:#fff;--serif:'DM Serif Display',serif;--sans:'Noto Sans JP',sans-serif;}
+body{background:var(--paper);font-family:var(--sans);color:var(--black);line-height:1.8;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(250,248,244,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);}
+.logo{font-family:var(--serif);font-size:22px;color:var(--black);text-decoration:none;}
+.logo span{color:var(--lime-dk);}
+.nav-cta{background:var(--black);color:var(--white);padding:10px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;}
+.hero{padding:140px 80px 80px;text-align:center;}
+.eye{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime-dk);margin-bottom:20px;display:block;}
+h1{font-family:var(--serif);font-size:56px;letter-spacing:-0.02em;line-height:1.1;margin-bottom:20px;}
+.sub{font-size:17px;color:var(--mid);}
+.faq-wrap{max-width:800px;margin:0 auto;padding:0 48px 120px;}
+.faq-cat{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime-dk);margin:64px 0 24px;display:block;}
+.faq-item{border-top:1px solid var(--rule);padding:0;}
+.faq-item:last-of-type{border-bottom:1px solid var(--rule);}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:24px 0;font-family:var(--sans);font-size:16px;font-weight:600;color:var(--black);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.faq-icon{font-size:20px;color:var(--lime-dk);flex-shrink:0;transition:transform .3s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-item.open .faq-a{max-height:400px;}
+.faq-a-inner{padding:0 0 24px;font-size:15px;color:var(--mid);line-height:1.85;}
+.cta-sec{background:var(--black);text-align:center;padding:100px 48px;}
+.cta-sec h2{font-family:var(--serif);font-size:40px;color:var(--white);margin-bottom:16px;letter-spacing:-0.02em;}
+.cta-sec p{color:rgba(255,255,255,0.4);margin-bottom:40px;font-size:16px;}
+.btn-lime{background:var(--lime);color:var(--black);padding:16px 40px;border-radius:4px;font-size:15px;font-weight:700;text-decoration:none;display:inline-block;}
+footer{background:#111010;color:rgba(255,255,255,0.3);padding:32px 48px;text-align:center;font-size:13px;}
+@media(max-width:768px){nav{padding:0 20px;}.hero{padding:120px 24px 60px;}h1{font-size:36px;}.faq-wrap{padding:0 24px 80px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Mimosa<span>.</span>Works</a>
+  <a href="/#price" class="nav-cta">無料で試す</a>
+</nav>
+
+<div class="hero">
+  <span class="eye">FAQ</span>
+  <h1>よくある質問</h1>
+  <p class="sub">ご不明な点はお気軽にお問い合わせください。</p>
+</div>
+
+<div class="faq-wrap">
+
+  <span class="faq-cat">サービスについて</span>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      AIが書いたコンテンツだとわかりますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      毎月のインタビューで経営者ご本人の言葉・体験・想いを引き出し、それをもとにAIが生成します。そのため「AIっぽい」無機質な文章ではなく、御社らしい文章になります。使い続けるほどAIが御社のトーンを学習し、精度が上がります。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      生成されたコンテンツは修正できますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      はい。承認前に管理画面からいつでも編集・修正できます。気に入らない部分はコメントをいただければ再生成します。ただ、多くのお客様は「ほぼそのまま使える」とおっしゃっています。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      どの業種でも使えますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      BtoB・BtoCを問わず、多くの業種でご利用いただけます。特に工務店・クリニック・士業・飲食・EC・人材業界での実績があります。業種によってコンテンツの特性が異なるため、初回インタビューで御社に合わせた設計をします。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      SEOの効果はいつ頃から出ますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      SEOは記事の蓄積が必要です。一般的に30〜50本を超えたあたりから効果が現れ始めます。月20本生成すれば2〜3ヶ月で到達できます。SNSは投稿開始から即日インプレッションが発生します。
+    </div></div>
+  </div>
+
+  <span class="faq-cat">料金・契約について</span>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      無料トライアルはどのように始められますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      クレジットカード不要で申し込みいただけます。30日間、全機能をお使いいただけます。トライアル期間中に解約すれば費用は一切かかりません。トライアル終了後は自動的に有料プランに移行します。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      いつでも解約できますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      はい。いつでも1クリックで解約できます。解約の翌月から課金が停止されます。長期縛りや違約金は一切ありません。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      プランの途中変更はできますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      はい、いつでも変更できます。アップグレードは即日反映。ダウングレードは翌月から反映されます。
+    </div></div>
+  </div>
+
+  <span class="faq-cat">運用・サポートについて</span>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      スタッフがいないのにサポートは受けられますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      お問い合わせの90%はAIが自動対応します。残り10%は代表が直接対応します。AIの方が24時間対応・即時回答できるため、むしろ人間より速いことがほとんどです。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      どのSNSに対応していますか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      X（Twitter）・Instagram・Facebook・LinkedInに対応しています。WordPressブログへの自動投稿も可能です。ご要望に応じてNote・はてなブログ等にも対応できます。
+    </div></div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      生成されたコンテンツの著作権は誰のものですか？
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">
+      生成されたコンテンツの著作権はお客様に帰属します。安心してご利用ください。
+    </div></div>
+  </div>
+
+</div>
+
+<div class="cta-sec">
+  <h2>他にご質問がありますか？</h2>
+  <p>お気軽にお問い合わせください。24時間以内にご返信します。</p>
+  <a href="mailto:hello@mimosaworks.com" class="btn-lime">メールで問い合わせる →</a>
+</div>
+
+<footer>© 2026 Mimosa Works — 個人事業主 | <a href="/privacy.html" style="color:inherit;">プライバシーポリシー</a> | <a href="/terms.html" style="color:inherit;">利用規約</a></footer>
+
+<script>
+function toggle(btn) {
+  const item = btn.closest('.faq-item');
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
